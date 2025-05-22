@@ -9,8 +9,15 @@ package com.mycompany.mavenproject3;
  * @author ASUS
  */
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class Mavenproject3 extends JFrame implements Runnable {
     private String text;
@@ -19,6 +26,8 @@ public class Mavenproject3 extends JFrame implements Runnable {
     private BannerPanel bannerPanel;
     private JButton addProductButton;
     private JButton sellingButton;
+
+    private SellingForm sellingForm;
 
     public Mavenproject3() {
 
@@ -47,6 +56,9 @@ public class Mavenproject3 extends JFrame implements Runnable {
         form.setProductChangeListener(() -> {
             SwingUtilities.invokeLater(() -> {
                 updateBannerText(form.getProductBannerText());
+                if (sellingForm != null && sellingForm.isDisplayable()) {
+                    sellingForm.updateProductList();
+                }
             });
         });
     
@@ -56,8 +68,10 @@ public class Mavenproject3 extends JFrame implements Runnable {
         });
 
         sellingButton.addActionListener(e -> {
-        SellingForm sellingForm = new SellingForm(form);
-        sellingForm.setVisible(true);
+            if (sellingForm == null || !sellingForm.isDisplayable()) {
+                sellingForm = new SellingForm(form);
+            }
+            sellingForm.setVisible(true);
         });
 
         setVisible(true);
