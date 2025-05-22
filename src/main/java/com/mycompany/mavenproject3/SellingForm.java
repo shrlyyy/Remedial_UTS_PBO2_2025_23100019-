@@ -8,12 +8,18 @@ package com.mycompany.mavenproject3;
  *
  * @author ASUS
  */
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-import java.util.ArrayList;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class SellingForm extends JFrame {
     private JComboBox<String> productComboBox;
@@ -100,7 +106,12 @@ public class SellingForm extends JFrame {
             double total = selected.getPrice() * qty;
             selected.setStock(selected.getStock() - qty);
 
-            productForm.loadProductData(productForm.getProducts());
+            if (selected.getStock() == 0) {
+                products.remove(index);
+            }
+
+            productForm.loadProductData(products);
+            productForm.repaint();
 
             JOptionPane.showMessageDialog(this,
                 "Penjualan berhasil!\n" +
@@ -108,10 +119,26 @@ public class SellingForm extends JFrame {
                 "Jumlah: " + qty + "\n" +
                 "Total: Rp " + total);
 
+            productComboBox.removeAllItems();
+            for (Product p : products) {
+                productComboBox.addItem(p.getName());
+            }
+
             updateProductInfo(); // update stok di tampilan
             qtyField.setText("");
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Qty tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void updateProductList() {
+        products = productForm.getProducts(); // Ambil ulang daftar produk terbaru
+        productComboBox.removeAllItems();
+        for (Product product : products) {
+            if (product.getStock() > 0) {
+                productComboBox.addItem(product.getName());
+            }
+        }
+        updateProductInfo();
     }
 }
