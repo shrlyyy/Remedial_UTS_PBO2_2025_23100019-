@@ -8,12 +8,24 @@ package com.mycompany.mavenproject3;
  *
  * @author ASUS
  */
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.table.DefaultTableModel;
 
 public class ProductForm extends JFrame {
     private JTable drinkTable;
